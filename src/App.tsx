@@ -3,6 +3,7 @@ import GlobalStyle from "./style/GlobalStyle";
 import Header from "./components/Header";
 import { motion, useScroll } from "framer-motion";
 import Intro from "./components/Intro";
+import About from "./components/About";
 
 function App() {
   const { scrollYProgress } = useScroll();
@@ -16,6 +17,7 @@ function App() {
       />
       <main>
         <Intro />
+        <About />
       </main>
     </>
   );

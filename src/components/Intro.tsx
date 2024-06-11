@@ -9,7 +9,6 @@ const IntroStyle = styled.section`
   background-attachment: fixed;
   padding-top: 80px;
   height: 1800px;
-  outline: 3px solid red;
   .wrapper {
     width: 100%;
     height: 100%;
