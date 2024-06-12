@@ -2,6 +2,8 @@ import { styled } from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import Logo from "./Logo";
+import { RefObject } from "react";
+import { useMediaQuery } from "react-responsive";
 
 const HeaderComp = styled.header`
   width: 100%;
@@ -95,25 +97,53 @@ const HeaderComp = styled.header`
   }
 `;
 
-// interface HeaderProps {
-//   topRef: RefObject<HTMLDivElement>;
-//   aboutRef: RefObject<HTMLDivElement>;
-//   skillsRef: RefObject<HTMLDivElement>;
-//   projectsRef: RefObject<HTMLDivElement>;
-// }
+interface HeaderProps {
+  topRef: RefObject<HTMLDivElement>;
+  aboutRef: RefObject<HTMLDivElement>;
+  skillsRef: RefObject<HTMLDivElement>;
+  projectsRef: RefObject<HTMLDivElement>;
+}
 
-const Header: any = () => {
+const Header: React.FC<HeaderProps> = ({
+  topRef,
+  aboutRef,
+  skillsRef,
+  projectsRef,
+}) => {
+  const isMobile = useMediaQuery({
+    query: "(max-width: 768px)",
+  });
+
+  const scrollToRef = (ref: RefObject<HTMLDivElement>) => {
+    if (ref.current) {
+      const elementPosition = ref.current.offsetTop;
+      const headerOffset = isMobile ? 44 : 84;
+      const offsetPosition = elementPosition - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const scrollToTop = () => {
+    if (topRef.current) {
+      topRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <HeaderComp>
       <div className="container">
         <nav>
-          <div className="logo">
+          <div className="logo" onClick={scrollToTop}>
             <Logo />
           </div>
           <ul>
-            <li>About</li>
-            <li>Skills</li>
-            <li>Projects</li>
+            <li onClick={() => scrollToRef(aboutRef)}>About</li>
+            <li onClick={() => scrollToRef(skillsRef)}>Skills</li>
+            <li onClick={() => scrollToRef(projectsRef)}>Projects</li>
             <li>
               <a
                 href="https://github.com/hjck4433"
